@@ -20,16 +20,16 @@ export default function Header() {
                     className='hidden lg:inline'
                 />
             </form>
-            <Button className='w-12 h-10' color="gray" pill>
+            <Button className='lg:hidden' color="gray" pill>
                 <AiOutlineSearch />
             </Button>
 
             <div className="flex gap-2 md:order-2">
-                <Button color="gray" className='w-12 h-10 hidden sm:inline' pill>
+                <Button color="gray" className='sm:inline' pill>
                     <FaMoon />
                 </Button>
                 <Link to='/sign-in'>
-                    <Button className='bg-gradient-to-br from-purple-600 to-blue-500 text-white hover:bg-gradient-to-bl focus:ring-blue-300 dark:focus:ring-blue-800'>
+                    <Button className='bg-gradient-to-br from-purple-600 to-blue-500 text-white hover:bg-gradient-to-bl focus:ring-blue-300 dark:focus:ring-blue-800 outline'>
                         Sign In
                     </Button>
                 </Link>
