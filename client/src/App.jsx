@@ -7,7 +7,7 @@ import SignUp from './pages/SignUp'
 import Projects from './pages/Projects'
 import About from './pages/About'
 import Header from './components/Header.jsx'
-
+import Footer from './components/Footer.jsx'
 function App() {
   return (
     <BrowserRouter>
@@ -20,6 +20,7 @@ function App() {
         <Route path="/projects" element={<Projects/>}/>
         <Route path="/about" element={<About/>}/>
       </Routes>
+        <Footer/>
     </BrowserRouter>
   )
 }
