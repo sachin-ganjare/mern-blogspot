@@ -10,12 +10,12 @@ export default function SignIn() {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value.trim() })
+    setFormData({ ...formData, [e.target.id]: e.target.value.trim() }) //trimming the extra spaces
   };
 
   const handleSubmit = async (e) => {
+    e.preventDefault(); // preventing refresh
     if (!formData.password || !formData.email) {
-      e.preventDefault();
       return setErrorMessage('Please fill out all fields!');
     }
 
@@ -28,17 +28,17 @@ export default function SignIn() {
         body: JSON.stringify(formData)
       });
       const data = await res.json();
-      if(data.success === false) {
-        return setErrorMessage(data.messsage);
+      if (data.success === false) {
+        setLoading(false);
+        return setErrorMessage(data.message);
       }
-      setLoading(false);
+      if (res.ok) {
+        navigate('/');
+      }
     }
     catch (error) {
-        setErrorMessage(error);
-        setLoading(false);
-        if(res.ok) {
-          navigate('/');
-        }
+      setErrorMessage(error.message);
+      setLoading(false);
     }
   }
   return (
@@ -67,8 +67,8 @@ export default function SignIn() {
             <Button disabled={loading} type='submit' className="mt-5 bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:bg-gradient-to-l focus:ring-purple-200 dark:focus:ring-purple-800 w-full">
               {loading ? (
                 <>
-                <Spinner size='sm'/>
-                <span className='pl-3'>Loading...</span>
+                  <Spinner size='sm' />
+                  <span className='pl-3'>Loading...</span>
                 </>
               ) : 'SignIn'}
             </Button>
@@ -85,7 +85,6 @@ export default function SignIn() {
                 {errorMessage}
               </Alert>
             )
-
           }
         </div>
       </div>
