@@ -30,8 +30,7 @@ export default function SignIn() {
       });
       const data = await res.json();
       if (data.success === false) {
-        dispatch(signInFailure(data.message));
-        return setErrorMessage(data.message);
+        return dispatch(signInFailure(data.message));
       }
       if (res.ok) {
         dispatch(signInSuccess(data));
