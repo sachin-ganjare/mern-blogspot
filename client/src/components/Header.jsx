@@ -1,11 +1,14 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Button, Navbar, NavbarToggle, NavbarLink, NavbarCollapse, TextInput } from 'flowbite-react'
+import { Button, Navbar, NavbarToggle, NavbarLink, NavbarCollapse, TextInput, Dropdown, Avatar, DropdownHeader, DropdownItem, DropdownDivider } from 'flowbite-react'
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon } from "react-icons/fa"
+import { useSelector } from 'react-redux';
 
 export default function Header() {
     const path = useLocation().pathname;
+    const { currentUser } = useSelector(state => state.user)
+
     return (
         <Navbar className="border-b-2">
             <Link to="/" className='self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white'>
@@ -28,25 +31,47 @@ export default function Header() {
                 <Button color="gray" className='sm:inline' pill>
                     <FaMoon />
                 </Button>
-                <Link to='/sign-in'>
-                    <Button className='bg-gradient-to-br from-purple-600 to-blue-500 text-white hover:bg-gradient-to-bl focus:ring-blue-300 dark:focus:ring-blue-800 outline'>
+                {currentUser ? (
+                    <Dropdown arrowIcon={false} inline label={
+                        <Avatar
+                            alt='user'
+                            img={currentUser.profilePicture}
+                            rounded
+                        />
+                    }>
+                        <DropdownHeader>
+                            <span className='block text-sm'>@{currentUser.username}</span>
+                            <span className='block text-sm font-medium truncate'>{currentUser.email}</span>
+                        </DropdownHeader>
+                        <Link to={'/dashboard?tab=profile'}>
+                            <DropdownItem>Profile</DropdownItem>
+                        </Link>
+                        <DropdownDivider />
+                        <DropdownItem>Sign out</DropdownItem>
+                    </Dropdown>
+                ) : (
+                    <Link to = '/sign-in'>
+                    <Button className = 'bg-gradient-to-br from-purple-600 to-blue-500 text-white hover:bg-gradient-to-bl focus:ring-blue-300 dark:focus:ring-blue-800 outline'>
                         Sign In
                     </Button>
-                </Link>
-                <NavbarToggle />
-            </div>
-            <NavbarCollapse>
-                <NavbarLink active={path === "/"} as="div">
-                    <Link to="/">Home</Link>
-                </NavbarLink>
+        </Link>
+    )
+}
 
-                <NavbarLink active={path === "/about"} as="div">
-                <Link to="/about">About</Link>
-                </NavbarLink>
-                <NavbarLink active={path === "/projects"} as="div">
-                    <Link to="/projects">Projects</Link>
-                </NavbarLink>
-            </NavbarCollapse>
-        </Navbar>
+<NavbarToggle />
+            </div >
+    <NavbarCollapse>
+        <NavbarLink active={path === "/"} as="div">
+            <Link to="/">Home</Link>
+        </NavbarLink>
+
+        <NavbarLink active={path === "/about"} as="div">
+            <Link to="/about">About</Link>
+        </NavbarLink>
+        <NavbarLink active={path === "/projects"} as="div">
+            <Link to="/projects">Projects</Link>
+        </NavbarLink>
+    </NavbarCollapse>
+        </Navbar >
     );
 }
