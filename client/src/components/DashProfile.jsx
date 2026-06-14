@@ -4,7 +4,7 @@ import { Alert, Button, ModalBody, Modal, ModalHeader, TextInput } from 'flowbit
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 import { deleteUserFailure, deleteUserStart, deleteUserSuccess, signOutSuccess, updateFailure, updateStart, updateSuccess } from '../redux/user/userSlice'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { HiOutlineExclamationCircle } from 'react-icons/hi'
 
 export default function DashProfile() {
@@ -276,6 +276,22 @@ export default function DashProfile() {
                 <Button outline type='submit' disabled={uploading || loading}>
                     {loading ? 'Updating...' : 'Update'}
                 </Button>
+                {
+
+                    currentUser.isAdmin && (
+                        <Link to={'/create-post'}>
+                            <Button
+                                color='green'
+                                disabled={uploading || loading}
+                                type='button'
+                                className='w-full'
+                                outline
+                            >
+                                Create a post
+                            </Button>
+                        </Link>
+                    )
+                }
             </form>
             <div className="text-red-500 flex justify-between mt-5">
                 <span onClick={() => setIsDeleteModalOpen(true)} className='cursor-pointer'>Delete Account</span>
@@ -286,7 +302,7 @@ export default function DashProfile() {
                 <ModalHeader />
                 <ModalBody>
                     <div className="text-center">
-                        <HiOutlineExclamationCircle className='h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto'/>
+                        <HiOutlineExclamationCircle className='h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto' />
                         <h3 className="text-lg mb-5 text-gray-500 dark:text-gray-400">Delete your account?</h3>
                         {errorMessage && (
                             <Alert color="red" className="mt-4" onDismiss={() => setErrorMessage(null)}>
