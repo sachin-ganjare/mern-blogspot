@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Alert, Button, TextInput } from 'flowbite-react'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
-import { signInSuccess, signOutSuccess } from '../redux/user/userSlice'
+import { signOutSuccess, updateFailure, updateStart, updateSuccess } from '../redux/user/userSlice'
 import { useNavigate } from 'react-router-dom'
 
 export default function DashProfile() {
-    const { currentUser } = useSelector(state => state.user);
+    const { currentUser, loading } = useSelector(state => state.user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [imageFile, setImageFile] = useState(null);
@@ -17,11 +17,15 @@ export default function DashProfile() {
     const [uploading, setUploading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
     const [successMessage, setSuccessMessage] = useState(null);
-    const [updateLoading, setUpdateLoading] = useState(false);
+
+    const [formData, setFormData] = useState(() => ({
+        username: currentUser?.username || '',
+        email: currentUser?.email || '',
+        password: ''
+    }));
+
+
     const filePickerRef = useRef();
-    const usernameRef = useRef();
-    const emailRef = useRef();
-    const passwordRef = useRef();
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -119,7 +123,7 @@ export default function DashProfile() {
 
         setErrorMessage(null);
         setSuccessMessage(null);
-        setUpdateLoading(true);
+        dispatch(updateStart());
 
         try {
             const res = await fetch(`/api/user/update/${currentUser._id}`, {
@@ -127,9 +131,9 @@ export default function DashProfile() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     userId: currentUser._id,
-                    username: usernameRef.current?.value.trim(),
-                    email: emailRef.current?.value.trim(),
-                    password: passwordRef.current?.value,
+                    username: formData.username.trim(),
+                    email: formData.email.trim(),
+                    password: formData.password,
                     profilePicture: uploadedImageUrl || currentUser.profilePicture,
                 }),
             });
@@ -137,19 +141,23 @@ export default function DashProfile() {
             const data = await res.json();
 
             if (data.success === false) {
+                dispatch(updateFailure(data.message));
                 setErrorMessage(data.message);
-                setUpdateLoading(false);
                 return;
             }
 
             if (res.ok) {
-                dispatch(signInSuccess(data));
+                dispatch(updateSuccess(data));
                 setSuccessMessage('Profile updated successfully.');
+                setFormData((prev) => ({ ...prev, password: '' }));
+                return;
             }
+
+            dispatch(updateFailure(data.message || 'Update failed'));
+            setErrorMessage(data.message || 'Update failed');
         } catch (error) {
+            dispatch(updateFailure(error.message));
             setErrorMessage(error.message);
-        } finally {
-            setUpdateLoading(false);
         }
     };
 
@@ -234,12 +242,30 @@ export default function DashProfile() {
                     )}
                 </div>
 
-                <TextInput type='text' id='username' placeholder='username' defaultValue={currentUser.username} ref={usernameRef} />
-                <TextInput type='text' id='email' placeholder='email' defaultValue={currentUser.email} ref={emailRef} />
-                <TextInput type='text' id='password' placeholder='password' ref={passwordRef} />
+                <TextInput
+                    type='text'
+                    id='username'
+                    placeholder='username'
+                    value={formData.username}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, username: e.target.value }))}
+                />
+                <TextInput
+                    type='text'
+                    id='email'
+                    placeholder='email'
+                    value={formData.email}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
+                />
+                <TextInput
+                    type='text'
+                    id='password'
+                    placeholder='password'
+                    value={formData.password}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, password: e.target.value }))}
+                />
 
-                <Button outline type='submit' disabled={uploading || updateLoading}>
-                    {updateLoading ? 'Updating...' : 'Update'}
+                <Button outline type='submit' disabled={uploading || loading}>
+                    {loading ? 'Updating...' : 'Update'}
                 </Button>
             </form>
             <div className="text-red-500 flex justify-between mt-5">
