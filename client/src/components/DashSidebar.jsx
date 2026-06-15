@@ -13,7 +13,7 @@ export default function DashSidebar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const tab = new URLSearchParams(location.search).get('tab') || '';
-  const { currentUser, loading } = useSelector(state => state.user);
+  const { currentUser } = useSelector(state => state.user);
 
   const handleSignOut = async () => {
     try {
