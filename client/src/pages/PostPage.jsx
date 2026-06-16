@@ -2,11 +2,11 @@ import { Button, Spinner } from 'flowbite-react';
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import CallToAction from '../components/CallToAction'
+import CommentSection from '../components/CommentSection'
 
 export default function PostPage() {
   const { postSlug } = useParams()
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
   const [post, setPost] = useState(null);
 
   useEffect(() => {
@@ -16,17 +16,14 @@ export default function PostPage() {
         const res = await fetch(`/api/post/getposts?slug=${postSlug}`);
         const data = await res.json();
         if (!res.ok) {
-          setError(true);
           setLoading(false);
           return;
         }
         if (res.ok) {
           setPost(data.posts[0]);
           setLoading(false);
-          setError(false);
         }
-      } catch (error) {
-        setError(true);
+      } catch {
         setLoading(false);
       }
     };
@@ -46,7 +43,7 @@ export default function PostPage() {
       <h1 className='text-3xl mt-18 p-3 text-center font-serif max-w-2xl mx-auto lg:text-4xl'>
         {post && post.title}
       </h1>
-      <Link to='/search?category=${post && post.category}'>
+      <Link to={`/search?category=${post && post.category}`}>
         <Button color='gray' pill size='xs'>{post && post.category}</Button>
       </Link>
       <img src={post && post.image} alt={post && post.title} className='mt-10 p-3 max-h-[600px] w-full object-cover mx-auto w-full max-w-2-xl text-xs'/>
@@ -56,6 +53,7 @@ export default function PostPage() {
       </div>
       <div dangerouslySetInnerHTML={{__html: post && post.content}} className="p-3 max-w-2xl mx-auto w-full post-content"></div>
       <CallToAction className="mx-auto" />
+      <CommentSection postId={post && post._id} postTitle={post && post.title} />
     </main>
   )
 }
