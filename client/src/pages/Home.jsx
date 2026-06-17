@@ -34,7 +34,7 @@ export default function Home() {
         if (res.ok) {
           setPosts(data.posts || []);
         }
-      } catch (err) {
+      } catch {
         setError('Could not load posts. Please try again later.');
       } finally {
         setLoading(false);

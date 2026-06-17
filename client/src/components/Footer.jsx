@@ -1,6 +1,6 @@
 import { Footer, FooterDivider, FooterLink, FooterLinkGroup, FooterTitle, FooterCopyright, FooterIcon } from 'flowbite-react';
 import { Link } from 'react-router-dom';
-import {BsFacebook, BsGithub, BsInstagram, BsTwitterX} from 'react-icons/bs';
+import { BsFacebook, BsGithub, BsInstagram, BsTwitterX } from 'react-icons/bs';
 
 export default function FooterCom() {
     return (
@@ -17,14 +17,11 @@ export default function FooterCom() {
                         <div>
                             <FooterTitle title='About' />
                             <FooterLinkGroup col>
-                                <FooterLink href='https://mytechsuweb.blogspot.com/' target='_blank' rel='noopener noreferrer'>
-                                    MyTechsu's Blogspot
+                                <FooterLink href='/about' rel='noopener noreferrer'>
+                                    About us
                                 </FooterLink>
                                 <FooterLink href='https://mytechsuweb.blogspot.com/' target='_blank' rel='noopener noreferrer'>
-                                    MyTechsu's Blogspot
-                                </FooterLink>
-                                <FooterLink href='https://mytechsuweb.blogspot.com/' target='_blank' rel='noopener noreferrer'>
-                                    MyTechsu's Blogspot
+                                    Our Blogspot
                                 </FooterLink>
                             </FooterLinkGroup>
                         </div>
@@ -52,14 +49,14 @@ export default function FooterCom() {
                         </div>
                     </div>
                 </div>
-                <FooterDivider/>
+                <FooterDivider />
                 <div className="w-full sm:flex sm:items-center sm:justify-between">
-                    <FooterCopyright href="#" by="Sachin's Blog" year={new Date().getFullYear()}/>
+                    <FooterCopyright href="#" by="Sachin's Blog" year={new Date().getFullYear()} />
                     <div className="flex gap-6 sm:mt-0 mt-4 sm:justify-center">
-                        <FooterIcon href='#' icon={BsFacebook}/>
-                        <FooterIcon href='#' icon={BsInstagram}/>
-                        <FooterIcon href='#' icon={BsTwitterX}/>
-                        <FooterIcon href='#' icon={BsGithub}/>
+                        <FooterIcon href='#' icon={BsFacebook} />
+                        <FooterIcon href='#' icon={BsInstagram} />
+                        <FooterIcon href='#' icon={BsTwitterX} />
+                        <FooterIcon href='#' icon={BsGithub} />
                     </div>
                 </div>
             </div>

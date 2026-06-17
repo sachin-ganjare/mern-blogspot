@@ -1,4 +1,4 @@
-import { FaInstagram, FaFacebookF, FaTwitter, FaYoutube, FaCheckCircle, FaSearch, FaEnvelope, FaChevronRight } from 'react-icons/fa';
+import { FaInstagram, FaFacebookF, FaTwitter, FaCheckCircle } from 'react-icons/fa';
 import CallToAction from '../components/CallToAction';
 
 export default function About() {
@@ -21,7 +21,7 @@ export default function About() {
         <header className="text-center mb-16 relative">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
           <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
-            About MyTechsu
+            About us
           </h1>
           <p className="text-sm sm:text-base font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 uppercase tracking-widest">
             MADE FOR TECHNOPHILES ❤ MADE BY TECHNOPHILES
@@ -36,7 +36,7 @@ export default function About() {
               Our Service
             </h2>
             <p className="text-slate-650 dark:text-slate-350 leading-relaxed">
-              Welcome to <strong>MyTechsu</strong>, your dedicated Technology World. We provide you with technical tips, comprehensive tutorials, and in-depth guides.</p>
+              Welcome to <strong>Sachin's Blog</strong>, your dedicated Technology World. We provide you with technical tips, comprehensive tutorials, and in-depth guides.</p>
           </div>
 
           {/* Journey Card */}
@@ -45,15 +45,15 @@ export default function About() {
               Beginning & Journey
             </h2>
             <p className="text-slate-650 dark:text-slate-350 leading-relaxed">
-              Established in 2014, MyTechsu made its initial debut in India, quickly expanding to a dedicated YouTube channel.
+              Established in 2014, Sachin's Blog made its initial debut in India, quickly expanding to a dedicated YouTube channel.
             </p>
           </div>
         </section>
 
-        {/* Why MyTechsu */}
+        {/* Why Sachin's Blog */}
         <section className="mb-16">
           <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white text-center mb-10">
-            Why Choose MyTechsu?
+            Why Choose Sachin's Blog?
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {whyChooseUs.map((item, idx) => (
@@ -112,7 +112,7 @@ export default function About() {
             Thank You For Joining Us!
           </p>
           <span className="text-xl sm:text-2xl font-black tracking-widest text-indigo-600 dark:text-indigo-400">
-            #MYTECHSU
+            #SACHINSBLOG
           </span>
         </footer>
 
